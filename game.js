@@ -33,7 +33,7 @@ function createObstacle() {
   const obstacleGeometry = new THREE.BoxGeometry(1, 1, 1);
   const obstacleMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
   const obstacle = new THREE.Mesh(obstacleGeometry, obstacleMaterial);
-  obstacle.position.set(Math.random() * 6 - 3, 0.5, -10); // Random x-position
+  obstacle.position.set(Math.random() * 6 - 3, 0.5, -50); // Random x-position
   scene.add(obstacle);
   obstacles.push(obstacle);
 }
@@ -44,7 +44,7 @@ camera.position.set(0, 2, 10);
 // Game state variables
 let moveLeft = false;
 let moveRight = false;
-let playerSpeed = 0.1;
+let playerSpeed = 1;
 let obstacleSpeed = 0.1;
 let score = 0;
 let gameOver = false;
@@ -94,6 +94,8 @@ function animate() {
   for (let i = 0; i < obstacles.length; i++) {
     obstacles[i].position.z += obstacleSpeed;
 
+    obstacleSpeed += 0.001;
+
     // Check for collisions
     if (obstacles[i].position.distanceTo(player.position) < 1) {
       gameOver = true;
@@ -110,7 +112,7 @@ function animate() {
   }
 
   // Add new obstacles periodically
-  if (Math.random() < 0.01) {
+  if (Math.random() < 0.05) {
     createObstacle();
   }
 
